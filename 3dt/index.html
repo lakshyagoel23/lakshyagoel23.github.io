@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3d test</title>
+</head>
+<body>
+	<script type="text/javascript" src="three.js"></script>
+	<script type="text/javascript" src="main.js"></script>	
+	<script>
+        function handleEventFromParent(event) {
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+
+            const { type, data } = event.data;
+
+           if (type === 'keydown') {
+                keyDown(data);
+                console.log("d")
+            } else if (type === 'keyup') {
+                keyUp(data);
+            }
+        }
+
+
+
+		        // Listen for messages from the parent window
+        window.addEventListener('message', handleEventFromParent);
+	</script>
+</html>
