@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #494a4b;
+    color: #333;
+    margin: 0;
+    padding: 0;
+     user-select: none;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align image and text to the left */
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Gap between the image and the text */
+    padding-left: 100px; /* Increased left padding for the image */
+}
+
+.profile img {
+    border-radius: 50%; /* Make the image fully rounded */
+    width: 160px; /* Increased size for the image */
+    height: 190px; /* Maintain the size to keep the image rounded */
+    object-fit: cover;
+    display: block; /* Ensure the image is displayed correctly */
+    user-drag: none; /* Disable image dragging */
+    -webkit-user-drag: none; /* Disable image dragging in WebKit browsers */
+}
+
+.intro {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 200px; /* Added left padding to the name and titles */
+}
+
+.intro h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.intro h2 {
+    font-size: 1.5em;
+    color: #555;
+    margin: 5px 0;
+}
+
+hr {
+    border: 0;
+     border-top: 5px solid #ddd;
+    margin: 20px 0; /* Add vertical margin for spacing */
+}
+
+.about, .education, .contact {
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-size: 1.75em;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* New Styles for Education and Contact Sections */
+.education-contact {
+    display: flex;
+    justify-content: space-between;
+}
+
+.education, .contact {
+    width: 48%; /* Adjust width for side-by-side layout */
+}
+
+.education {
+    padding-right: 20px; /* Add right padding for spacing */
+}
+
+.contact {
+    padding-left: 20px; /* Add left padding for spacing */
+}

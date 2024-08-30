@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: 1; /* Canvas above content */
+        }
+        .content {
+            position: relative;
+            z-index: 0; /* Content below canvas */
+            color: black;
+            text-align: center;
+            padding: 50px;
+            margin-top: 50px; /* Optional: Adjust to ensure content is visible */
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scratchCanvas"></canvas>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="profile">
+                    <img src="me.jpg" alt="Lakshya Goel">
+                </div>
+                <div class="intro">
+                    <h1>Lakshya Goel</h1>
+                    <h2>Aspiring AI Engineer</h2>
+                    <h2>Data Scientist</h2>
+                    <h2>Web Developer</h2>
+                    <h2>Robotics Enthusiast</h2>
+                </div>
+            </div>
+            <hr> <!-- Horizontal line added here -->
+        </header>
+
+        <section class="about">
+            <h3>About Me</h3>
+            <p>Final-year B.Tech student specializing in Artificial Intelligence and Data Science, with a strong foundation in AI principles, algorithms, and data-driven problem-solving. Hands-on experience in developing AI models and simulating complex scenarios. Participation in robotics competitions, hackathons, and coding challenges has enhanced technical skills and fostered a passion for innovation and teamwork. Eager to leverage expertise in a dynamic role where contributions can be made to cutting-edge projects in AI and data science.</p>
+        </section>
+
+       <section class="education-contact">
+    <div class="education">
+        <h3>Education</h3>
+        <ul>
+            <li>B.Tech in AI and Data Science - Maharaja Agrasen Institute of Technology, IPU, 2025</li>
+        </ul>
+    </div>
+    <div class="contact">
+        <h3>Contact</h3>
+        <ul>
+            <li>Email: <a href="mailto:lakshyagoel23@gmail.com" target="_blank">lakshyagoel23@gmail.com</a></li>
+            <li>Website: <a href="https://www.yourwebsite.com" target="_blank">www.yourwebsite.com</a></li>
+            <li>LinkedIn: <a href="https://www.linkedin.com/in/LakshyaGoel23" target="_blank">LinkedIn Profile</a></li>
+        </ul>
+        <a href="Lakshya_Goel_Resume.pdf" class="btn" target="_blank">Download Resume</a>
+    </div>
+</section>
+
+    </div>
+    <script>
+
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let isMouseDown = false;
+
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Draw initial black background
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+         ctx.font = '50px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText('Scratch Me, Hold Down Left Mouse Button and Move The Cursor', 0, canvas.height / 4);
+
+        // Mouse events
+        window.addEventListener('mousedown', () => isMouseDown = true);
+        window.addEventListener('mouseup', () => isMouseDown = false);
+        window.addEventListener('mousemove', (e) => {
+            if (isMouseDown) {
+                const radius = 50;
+                ctx.globalCompositeOperation = 'destination-out'; // make area transparent
+                ctx.beginPath();
+                ctx.globalCompositeOperation = 'destination-out'; // make area transparent
+                ctx.arc(e.clientX, e.clientY, radius, 0, Math.PI * 2, true);
+                ctx.fillStyle = '#000';
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fill();
+                console.log("c")
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+function handleEventFromParent(event) {
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+
+            const { type, data } = event.data;
+            if (type === 'mousemove') {
+                if (isMouseDown) {
+                const radius = 50;
+                ctx.globalCompositeOperation = 'destination-out'; // make area transparent
+                ctx.beginPath();
+                ctx.globalCompositeOperation = 'destination-out'; // make area transparent
+                ctx.arc(data.clientX,data.clientY, radius, 0, Math.PI * 2, true);
+                ctx.fillStyle = '#000';
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fill();
+                console.log("c")
+            }
+            } else if (type == 'mousedown') {
+                isMouseDown = true
+            } else if (type == 'mouseup') {
+                isMouseDown = false
+        }
+
+
+
+}
+
+
+        // Listen for messages from the parent window
+        window.addEventListener('message', handleEventFromParent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>

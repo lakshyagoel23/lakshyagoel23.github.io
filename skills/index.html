@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        #canvasContainer {
+            width: 40%;
+            height: 100vh;
+            float: right;
+            position: relative;
+              margin-top: 0px;
+        }
+
+        #myCanvas {
+            border: 4px solid white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 94%;
+              margin-top: 0px;
+        }
+
+
+        .skills-section {
+  margin-top: 0px; /* Adjust as needed */
+}
+
+.skills-section h2 {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 10px;
+  max-width: 60%;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 60%;
+}
+
+.skill-item {
+  /*background-color: hsla(120, 100%, 50%, 1);*/
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  flex: 0 0 auto; /* Ensure items don't stretch beyond their content */
+}
+.skills-section, .canvas-container {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.skills-section {
+  margin-top: 20px; /* Adjust as needed */
+  width: 50%;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <div class="skills-section">
+  <h2>Skills</h2>
+  <div class="skills-list">
+    <div class="skill-item">Stable Diffusion</div>
+    <div class="skill-item">Genetic Algorithm</div>
+    <div class="skill-item">NEAT Algorithm</div>
+    <div class="skill-item">Neural Network</div>
+    <div class="skill-item">TensorFlow</div>
+    <div class="skill-item">Image Processing</div>
+    <div class="skill-item">MARL - Multi Agent Reinforcement Learning</div>
+    <div class="skill-item">LLM - Large Language Models</div>
+    <div class="skill-item">Database Administration</div>
+    <div class="skill-item">CNN - Convolutional Neural Network</div>
+    <div class="skill-item">C++</div>
+    <div class="skill-item">JavaScript</div>
+    <div class="skill-item">jQuery/</div>
+    <div class="skill-item">THREE.js</div>
+    <div class="skill-item">WebGL</div>
+    <div class="skill-item">/p5.js</div>
+    <div class="skill-item">PHP</div>
+    <div class="skill-item">SQL/PHPMyAdmin</div>
+  </div>
+</div>
+
+    <div id="canvasContainer">
+        <canvas id="myCanvas"></canvas>
+    </div>
+    <script>
+        const skillItems = document.querySelectorAll('.skill-item');
+        let randomColor;
+        let randomColorD;
+
+skillItems.forEach(item => {
+    let c = random(360)
+
+  randomColor = hsla(c , "100%", "50%", 1);
+  randomColorD = '"' + randomColor + '"';
+  item.style.backgroundColor = randomColor;
+   console.log(item.style.backgroundColor)
+});
+
+function random(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function hsla(h, s, l, a) {
+    
+  return "hsla(" + h + " , " + s + ", " + l + ", " + a +")";
+}
+
+
+
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set canvas dimensions to fill the container
+        canvas.width = canvasContainer.clientWidth;
+        canvas.height = canvas.width; // Make canvas square
+
+        // Define circle properties
+        var circles = [];
+        var circleRadius = 35;
+        var circleSpeed = 8;
+        var circleImages = ["img1.png", "img2.png", "img3.jpg", "img4.jpg", "img5.png"]; // Replace with actual image paths
+
+        // Create circles with random positions, directions, and rotations
+        for (var i = 0; i < 5; i++) {
+            var circle = {
+                x: Math.random() * (canvas.width - circleRadius * 2) + circleRadius,
+                y: Math.random() * (canvas.height - circleRadius * 2) + circleRadius,
+                dx: (Math.random() - 0.5) * circleSpeed,
+                dy: (Math.random() - 0.5) * circleSpeed,
+                rotation: Math.random() * 2 * Math.PI,
+                image: new Image()
+            };
+            circle.image.src = circleImages[i];
+            circles.push(circle);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw circles with images
+            for (var i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+                ctx.save();
+                ctx.translate(circle.x, circle.y); // Translate to the circle's center
+                ctx.rotate(circle.rotation); // Rotate the image
+
+
+                ctx.beginPath();
+        ctx.arc(0, 0, circleRadius, 0, 2 * Math.PI);
+        ctx.clip(); // Clip the image to the circle after rotation
+        ctx.drawImage(circle.image, -circleRadius, -circleRadius, circleRadius * 2, circleRadius * 2);
+        
+        // Draw the glowing outline
+        ctx.globalCompositeOperation = "lighter"; // Additive blending for the glow
+        ctx.strokeStyle = "rgba(255, 192, 203, 0.5)"; // Adjust color and opacity
+        ctx.lineWidth = 10; // Adjust line width for the glow
+        ctx.beginPath();
+        ctx.arc(0, 0, circleRadius + 2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.restore();
+
+            }
+
+            // Update circle positions and check for collisions
+            for (var i = 0; i < circles.length; i++) {
+                var circle1 = circles[i];
+                circle1.x += circle1.dx;
+                circle1.y += circle1.dy;
+
+                // Bounce off canvas boundaries
+                if (circle1.x - circleRadius < 0 || circle1.x + circleRadius > canvas.width) {
+                    circle1.dx *= -1;
+                }
+                if (circle1.y - circleRadius < 0 || circle1.y + circleRadius > canvas.height) {
+                    circle1.dy *= -1;
+                }
+
+                // Check for collisions with other circles
+                for (var j = i + 1; j < circles.length; j++) {
+                    var circle2 = circles[j];
+                    var dx = circle1.x - circle2.x;
+                    var dy = circle1.y - circle2.y;
+                    var distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < circleRadius * 2 + 1) {
+                        // Calculate collision angle
+                        var angle = Math.atan2(dy, dx);
+                        var m1 = circle1.mass || 1;
+                        var m2 = circle2.mass || 1;
+                        var v1x = circle1.dx;
+                        var v1y = circle1.dy;
+                        var v2x = circle2.dx;
+                        var v2y = circle2.dy;
+
+                        // Apply collision physics
+                        var u1x = (m1 - m2) / (m1 + m2) * v1x + (2 * m2) / (m1 + m2) * v2x;
+                        var u1y = (m1 - m2) / (m1 + m2) * v1y + (2 * m2) / (m1 + m2) * v2y;
+                        var u2x = (2 * m1) / (m1 + m2) * v1x + (m2 - m1) / (m1 + m2) * v2x;
+                        var u2y = (2 * m1) / (m1 + m2) * v1y + (m2 - m1) / (m1 + m2) * v2y;
+
+                        circle1.dx = u1x * Math.cos(angle) - u1y * Math.sin(angle);
+                        circle1.dy = u1x * Math.sin(angle) + u1y * Math.cos(angle);
+                        circle2.dx = u2x * Math.cos(angle) - u2y * Math.sin(angle);
+                        circle2.dy = u2x * Math.sin(angle) + u2y * Math.cos(angle);
+                    }
+                }
+            }
+
+            // Update circle rotations
+            for (var i = 0; i < circles.length; i++) {
+                circles[i].rotation += 0.02; // Adjust rotation speed as needed
+            }
+
+            // Request the next frame
+            requestAnimationFrame(draw);
+        }
+
+        // Start the animation
+        draw();
+    </script>
+</body>
+</html>
